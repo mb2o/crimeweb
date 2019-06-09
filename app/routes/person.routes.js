@@ -6,9 +6,13 @@ const auth = require('../helpers/auth/verifyJwtToken');
 const peopleController = require('../controllers/people.controller');
 
 peopleRouter.post('/', [auth.verifyToken], peopleController.create);
-peopleRouter.get('/', peopleController.read);
-peopleRouter.get('/:id', peopleController.readOne);
+
+peopleRouter.get('/search', peopleController.find);
+peopleRouter.get('/', peopleController.findAll);
+peopleRouter.get('/:id', peopleController.findById);
+
 peopleRouter.patch('/:id', [auth.verifyToken], peopleController.update);
+
 peopleRouter.delete('/:id', [auth.verifyToken], peopleController.delete);
 
 module.exports = peopleRouter;

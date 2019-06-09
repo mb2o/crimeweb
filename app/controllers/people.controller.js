@@ -1,16 +1,129 @@
 const db = require('../../models');
+const { Op } = db.Sequelize;
 
 const peopleController = {};
 
 peopleController.create = (req, res) => {
-  const { name, price, category } = req.body;
-
-  db.Person.create({ name, price, category }).then(person => {
+  db.Person.create({ ...req.body }).then(person => {
     res.status(201).json(person);
   });
 };
 
-peopleController.read = (req, res) => {
+peopleController.find = (req, res) => {
+  let filter = {};
+  let whereFilter = [];
+
+  Object.keys(req.query).forEach(item => {
+    if (item.endsWith('_id')) {
+      whereFilter.push({
+        [item]: {
+          [Op.eq]: req.query[item]
+        }
+      });
+    } else {
+      whereFilter.push({
+        [item]: {
+          [Op.like]: `%${req.query[item]}%`
+        }
+      });
+    }
+  });
+
+  if (Object.keys(req.query).length > 0) {
+    filter = {
+      where: {
+        [Op.and]: whereFilter
+      },
+      order: [['deathdate', 'DESC']],
+      limit: 30,
+      include: [
+        {
+          model: db.User,
+          as: 'user',
+          attributes: ['id', 'name']
+        },
+        {
+          model: db.Country,
+          as: 'birthcountry',
+          attributes: ['name', 'iso_alpha_2']
+        },
+        {
+          model: db.Country,
+          as: 'deathcountry',
+          attributes: ['name', 'iso_alpha_2']
+        },
+        {
+          model: db.Crime,
+          as: 'crimes',
+          attributes: [
+            'id',
+            'remark',
+            'is_solved',
+            'type_id',
+            'committeddate',
+            'motive_id'
+          ],
+          include: [
+            {
+              model: db.Person,
+              as: 'victim',
+              attributes: [
+                'id',
+                'birthdate',
+                'birthname',
+                'deathdate',
+                'firstname',
+                'lastname',
+                'gender',
+                'nicknames',
+                'photo',
+                'remark',
+                'is_deceased'
+              ]
+            }
+          ]
+        },
+        {
+          model: db.Crime,
+          as: 'victim_of',
+          attributes: [
+            'id',
+            'remark',
+            'is_solved',
+            'type_id',
+            'committeddate',
+            'motive_id'
+          ],
+          include: [
+            {
+              model: db.Person,
+              as: 'perpetrator',
+              attributes: [
+                'id',
+                'birthdate',
+                'birthname',
+                'deathdate',
+                'firstname',
+                'lastname',
+                'gender',
+                'nicknames',
+                'photo',
+                'remark',
+                'is_deceased'
+              ]
+            }
+          ]
+        }
+      ]
+    };
+  }
+
+  db.Person.findAll(filter).then(people => {
+    res.status(200).json(people);
+  });
+};
+
+peopleController.findAll = (req, res) => {
   db.Person.findAll({
     include: [
       {
@@ -108,7 +221,7 @@ peopleController.read = (req, res) => {
   });
 };
 
-peopleController.readOne = (req, res) => {
+peopleController.findById = (req, res) => {
   db.Person.findByPk(req.params.id, {
     include: [
       {
@@ -189,16 +302,14 @@ peopleController.readOne = (req, res) => {
         ]
       }
     ]
-  }).then(item => {
-    res.status(200).json(item);
+  }).then(person => {
+    res.status(200).json(person);
   });
 };
 
 peopleController.update = (req, res) => {
-  const { name, price, category } = req.body;
-
   db.Person.update(
-    { name, price, category },
+    { ...req.body },
     {
       where: {
         id: req.params.id

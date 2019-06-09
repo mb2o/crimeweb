@@ -31,6 +31,16 @@ module.exports = (sequelize, DataTypes) => {
 
   Person.associate = function(models) {
     Person.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    Person.belongsTo(models.Country, {
+      foreignKey: 'birthcountry_id',
+      as: 'birthcountry'
+    });
+    Person.belongsTo(models.Country, {
+      foreignKey: 'deathcountry_id',
+      as: 'deathcountry'
+    });
+    Person.hasMany(models.Crime, { foreignKey: 'criminal_id', as: 'crimes' });
+    Person.hasMany(models.Crime, { foreignKey: 'victim_id', as: 'victim_of' });
   };
 
   return Person;

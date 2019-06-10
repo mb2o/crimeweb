@@ -45,12 +45,12 @@ peopleController.find = (req, res) => {
         {
           model: db.Country,
           as: 'birthcountry',
-          attributes: ['name', 'iso_alpha_2']
+          attributes: ['id', 'name', 'iso_alpha_2']
         },
         {
           model: db.Country,
           as: 'deathcountry',
-          attributes: ['name', 'iso_alpha_2']
+          attributes: ['id', 'name', 'iso_alpha_2']
         },
         {
           model: db.Crime,
@@ -80,6 +80,16 @@ peopleController.find = (req, res) => {
                 'remark',
                 'is_deceased'
               ]
+            },
+            {
+              model: db.CrimeType,
+              as: 'crime_type',
+              attributes: ['title']
+            },
+            {
+              model: db.Motive,
+              as: 'motive',
+              attributes: ['title']
             }
           ]
         },
@@ -111,6 +121,16 @@ peopleController.find = (req, res) => {
                 'remark',
                 'is_deceased'
               ]
+            },
+            {
+              model: db.CrimeType,
+              as: 'crime_type',
+              attributes: ['title']
+            },
+            {
+              model: db.Motive,
+              as: 'motive',
+              attributes: ['title']
             }
           ]
         }
@@ -174,6 +194,11 @@ peopleController.findAll = (req, res) => {
             model: db.CrimeType,
             as: 'crime_type',
             attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
           }
         ]
       },
@@ -210,6 +235,11 @@ peopleController.findAll = (req, res) => {
             model: db.CrimeType,
             as: 'crime_type',
             attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
           }
         ]
       }
@@ -232,12 +262,12 @@ peopleController.findById = (req, res) => {
       {
         model: db.Country,
         as: 'birthcountry',
-        attributes: ['name', 'iso_alpha_2']
+        attributes: ['id', 'name', 'iso_alpha_2']
       },
       {
         model: db.Country,
         as: 'deathcountry',
-        attributes: ['name', 'iso_alpha_2']
+        attributes: ['id', 'name', 'iso_alpha_2']
       },
       {
         model: db.Crime,
@@ -267,6 +297,16 @@ peopleController.findById = (req, res) => {
               'remark',
               'is_deceased'
             ]
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
           }
         ]
       },
@@ -298,6 +338,16 @@ peopleController.findById = (req, res) => {
               'remark',
               'is_deceased'
             ]
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
           }
         ]
       }

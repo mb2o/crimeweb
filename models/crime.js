@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'type_id',
       as: 'crime_type'
     });
+    Crime.belongsTo(models.Motive, {
+      foreignKey: 'motive_id',
+      as: 'motive'
+    });
   };
 
   return Crime;

@@ -133,6 +133,16 @@ peopleController.find = (req, res) => {
               attributes: ['title']
             }
           ]
+        },
+        {
+          model: db.CauseOfDeath,
+          as: 'cause_of_death',
+          attributes: ['title']
+        },
+        {
+          model: db.Classification,
+          as: 'classification',
+          attributes: ['title']
         }
       ]
     };
@@ -242,6 +252,16 @@ peopleController.findAll = (req, res) => {
             attributes: ['title']
           }
         ]
+      },
+      {
+        model: db.CauseOfDeath,
+        as: 'cause_of_death',
+        attributes: ['title']
+      },
+      {
+        model: db.Classification,
+        as: 'classification',
+        attributes: ['title']
       }
     ],
     order: [['deathdate', 'DESC']],
@@ -350,6 +370,16 @@ peopleController.findById = (req, res) => {
             attributes: ['title']
           }
         ]
+      },
+      {
+        model: db.CauseOfDeath,
+        as: 'cause_of_death',
+        attributes: ['title']
+      },
+      {
+        model: db.Classification,
+        as: 'classification',
+        attributes: ['title']
       }
     ]
   }).then(person => {

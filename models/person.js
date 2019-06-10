@@ -41,6 +41,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'deathcountry_id',
       as: 'deathcountry'
     });
+    Person.belongsTo(models.CauseOfDeath, {
+      foreignKey: 'causeofdeath_id',
+      as: 'cause_of_death'
+    });
+    Person.belongsTo(models.Classification, {
+      foreignKey: 'classification_id',
+      as: 'classification'
+    });
+
     Person.hasMany(models.Crime, { foreignKey: 'criminal_id', as: 'crimes' });
     Person.hasMany(models.Crime, { foreignKey: 'victim_id', as: 'victim_of' });
   };

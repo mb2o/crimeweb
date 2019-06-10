@@ -175,6 +175,11 @@ peopleController.find = (req, res) => {
           model: db.Event,
           as: 'events',
           attributes: ['id', 'eventdate', 'description']
+        },
+        {
+          model: db.MannerOfDeath,
+          as: 'manner_of_death',
+          attributes: ['title']
         }
       ]
     };
@@ -326,6 +331,11 @@ peopleController.findAll = (req, res) => {
         model: db.Event,
         as: 'events',
         attributes: ['id', 'eventdate', 'description']
+      },
+      {
+        model: db.MannerOfDeath,
+        as: 'manner_of_death',
+        attributes: ['title']
       }
     ],
     order: [['deathdate', 'DESC']],
@@ -476,6 +486,11 @@ peopleController.findById = (req, res) => {
         model: db.Event,
         as: 'events',
         attributes: ['id', 'eventdate', 'description']
+      },
+      {
+        model: db.MannerOfDeath,
+        as: 'manner_of_death',
+        attributes: ['title']
       }
     ]
   }).then(person => {

@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'causeofdeath_id',
       as: 'cause_of_death'
     });
+    Person.belongsTo(models.MannerOfDeath, {
+      foreignKey: 'mannerofdeath_id',
+      as: 'manner_of_death'
+    });
     Person.belongsTo(models.Classification, {
       foreignKey: 'classification_id',
       as: 'classification'

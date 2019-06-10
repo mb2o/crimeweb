@@ -1,5 +1,11 @@
 const db = require('../../models');
 const { Op } = db.Sequelize;
+const {
+  personAttributes,
+  countryAttributes,
+  crimeAttributes,
+  convictionAttributes
+} = require('../helpers/attributes');
 
 const peopleController = {};
 
@@ -45,41 +51,22 @@ peopleController.find = async (req, res) => {
         {
           model: db.Country,
           as: 'birthcountry',
-          attributes: ['id', 'name', 'iso_alpha_2']
+          attributes: countryAttributes
         },
         {
           model: db.Country,
           as: 'deathcountry',
-          attributes: ['id', 'name', 'iso_alpha_2']
+          attributes: countryAttributes
         },
         {
           model: db.Crime,
           as: 'crimes',
-          attributes: [
-            'id',
-            'remark',
-            'is_solved',
-            'type_id',
-            'committeddate',
-            'motive_id'
-          ],
+          attributes: crimeAttributes,
           include: [
             {
               model: db.Person,
               as: 'victim',
-              attributes: [
-                'id',
-                'birthdate',
-                'birthname',
-                'deathdate',
-                'firstname',
-                'lastname',
-                'gender',
-                'nicknames',
-                'photo',
-                'remark',
-                'is_deceased'
-              ]
+              attributes: personAttributes
             },
             {
               model: db.CrimeType,
@@ -96,31 +83,12 @@ peopleController.find = async (req, res) => {
         {
           model: db.Crime,
           as: 'victim_of',
-          attributes: [
-            'id',
-            'remark',
-            'is_solved',
-            'type_id',
-            'committeddate',
-            'motive_id'
-          ],
+          attributes: crimeAttributes,
           include: [
             {
               model: db.Person,
               as: 'perpetrator',
-              attributes: [
-                'id',
-                'birthdate',
-                'birthname',
-                'deathdate',
-                'firstname',
-                'lastname',
-                'gender',
-                'nicknames',
-                'photo',
-                'remark',
-                'is_deceased'
-              ]
+              attributes: personAttributes
             },
             {
               model: db.CrimeType,
@@ -143,28 +111,6 @@ peopleController.find = async (req, res) => {
           model: db.Classification,
           as: 'classification',
           attributes: ['title']
-        },
-        {
-          model: db.Conviction,
-          as: 'convictions',
-          attributes: [
-            'id',
-            'duration',
-            'tbs',
-            'title',
-            'verdictdate',
-            'ecli',
-            'ecli_appeal',
-            'casenumber',
-            'country_id'
-          ],
-          include: [
-            {
-              model: db.Country,
-              as: 'country',
-              attributes: ['id', 'name', 'iso_alpha_2']
-            }
-          ]
         },
         {
           model: db.MannerOfDeath,
@@ -199,131 +145,71 @@ peopleController.findAll = async (req, res) => {
       {
         model: db.Country,
         as: 'birthcountry',
-        attributes: ['name', 'iso_alpha_2']
+        attributes: countryAttributes
       },
       {
         model: db.Country,
         as: 'deathcountry',
-        attributes: ['name', 'iso_alpha_2']
+        attributes: countryAttributes
       },
       {
         model: db.Crime,
         as: 'crimes',
-        attributes: [
-          'id',
-          'remark',
-          'is_solved',
-          'type_id',
-          'committeddate',
-          'motive_id'
-        ],
+        attributes: crimeAttributes,
         include: [
           {
             model: db.Person,
             as: 'victim',
-            attributes: [
-              'id',
-              'birthdate',
-              'birthname',
-              'deathdate',
-              'firstname',
-              'lastname',
-              'gender',
-              'nicknames',
-              'photo',
-              'remark',
-              'is_deceased'
-            ]
+            attributes: personAttributes
           },
           {
             model: db.CrimeType,
             as: 'crime_type',
-            attributes: ['title']
+            attributes: ['id', 'title']
           },
           {
             model: db.Motive,
             as: 'motive',
-            attributes: ['title']
+            attributes: ['id', 'title']
           }
         ]
       },
       {
         model: db.Crime,
         as: 'victim_of',
-        attributes: [
-          'id',
-          'remark',
-          'is_solved',
-          'type_id',
-          'committeddate',
-          'motive_id'
-        ],
+        attributes: crimeAttributes,
         include: [
           {
             model: db.Person,
             as: 'perpetrator',
-            attributes: [
-              'id',
-              'birthdate',
-              'birthname',
-              'deathdate',
-              'firstname',
-              'lastname',
-              'gender',
-              'nicknames',
-              'photo',
-              'remark',
-              'is_deceased'
-            ]
+            attributes: personAttributes
           },
           {
             model: db.CrimeType,
             as: 'crime_type',
-            attributes: ['title']
+            attributes: ['id', 'title']
           },
           {
             model: db.Motive,
             as: 'motive',
-            attributes: ['title']
+            attributes: ['id', 'title']
           }
         ]
       },
       {
         model: db.CauseOfDeath,
         as: 'cause_of_death',
-        attributes: ['title']
+        attributes: ['id', 'title']
       },
       {
         model: db.Classification,
         as: 'classification',
-        attributes: ['title']
-      },
-      {
-        model: db.Conviction,
-        as: 'convictions',
-        attributes: [
-          'id',
-          'duration',
-          'tbs',
-          'title',
-          'verdictdate',
-          'ecli',
-          'ecli_appeal',
-          'casenumber',
-          'country_id'
-        ],
-        include: [
-          {
-            model: db.Country,
-            as: 'country',
-            attributes: ['id', 'name', 'iso_alpha_2']
-          }
-        ]
+        attributes: ['id', 'title']
       },
       {
         model: db.MannerOfDeath,
         as: 'manner_of_death',
-        attributes: ['title']
+        attributes: ['id', 'title']
       },
       {
         model: db.Tag,
@@ -343,6 +229,7 @@ peopleController.findAll = async (req, res) => {
 
 peopleController.findById = async (req, res) => {
   let result = await db.Person.findByPk(req.params.id, {
+    attributes: personAttributes,
     include: [
       {
         model: db.User,
@@ -352,131 +239,71 @@ peopleController.findById = async (req, res) => {
       {
         model: db.Country,
         as: 'birthcountry',
-        attributes: ['id', 'name', 'iso_alpha_2']
+        attributes: countryAttributes
       },
       {
         model: db.Country,
         as: 'deathcountry',
-        attributes: ['id', 'name', 'iso_alpha_2']
+        attributes: countryAttributes
       },
       {
         model: db.Crime,
         as: 'crimes',
-        attributes: [
-          'id',
-          'remark',
-          'is_solved',
-          'type_id',
-          'committeddate',
-          'motive_id'
-        ],
+        attributes: crimeAttributes,
         include: [
           {
             model: db.Person,
             as: 'victim',
-            attributes: [
-              'id',
-              'birthdate',
-              'birthname',
-              'deathdate',
-              'firstname',
-              'lastname',
-              'gender',
-              'nicknames',
-              'photo',
-              'remark',
-              'is_deceased'
-            ]
+            attributes: personAttributes
           },
           {
             model: db.CrimeType,
             as: 'crime_type',
-            attributes: ['title']
+            attributes: ['id', 'title']
           },
           {
             model: db.Motive,
             as: 'motive',
-            attributes: ['title']
+            attributes: ['id', 'title']
           }
         ]
       },
       {
         model: db.Crime,
         as: 'victim_of',
-        attributes: [
-          'id',
-          'remark',
-          'is_solved',
-          'type_id',
-          'committeddate',
-          'motive_id'
-        ],
+        attributes: crimeAttributes,
         include: [
           {
             model: db.Person,
             as: 'perpetrator',
-            attributes: [
-              'id',
-              'birthdate',
-              'birthname',
-              'deathdate',
-              'firstname',
-              'lastname',
-              'gender',
-              'nicknames',
-              'photo',
-              'remark',
-              'is_deceased'
-            ]
+            attributes: personAttributes
           },
           {
             model: db.CrimeType,
             as: 'crime_type',
-            attributes: ['title']
+            attributes: ['id', 'title']
           },
           {
             model: db.Motive,
             as: 'motive',
-            attributes: ['title']
+            attributes: ['id', 'title']
           }
         ]
       },
       {
         model: db.CauseOfDeath,
         as: 'cause_of_death',
-        attributes: ['title']
+        attributes: ['id', 'title']
       },
       {
         model: db.Classification,
         as: 'classification',
-        attributes: ['title']
-      },
-      {
-        model: db.Conviction,
-        as: 'convictions',
-        attributes: [
-          'id',
-          'duration',
-          'tbs',
-          'title',
-          'verdictdate',
-          'ecli',
-          'ecli_appeal',
-          'casenumber',
-          'country_id'
-        ],
-        include: [
-          {
-            model: db.Country,
-            as: 'country',
-            attributes: ['id', 'name', 'iso_alpha_2']
-          }
-        ]
+        attributes: ['id', 'title']
       },
       {
         model: db.MannerOfDeath,
         as: 'manner_of_death',
-        attributes: ['title']
+        attributes: ['id', 'title']
       },
       {
         model: db.Tag,
@@ -506,24 +333,12 @@ peopleController.findById = async (req, res) => {
 peopleController.getRelations = async (req, res) => {
   let person = await db.Person.findByPk(req.params.id);
   let relations = await person.getRelations({
-    attributes: ['person2_id', 'relationshiptype_id'],
+    attributes: ['person2_id'],
     include: [
       {
         model: db.Person,
         as: 'relation',
-        attributes: [
-          'id',
-          'birthdate',
-          'birthname',
-          'deathdate',
-          'firstname',
-          'lastname',
-          'gender',
-          'nicknames',
-          'photo',
-          'remark',
-          'is_deceased'
-        ]
+        attributes: personAttributes
       },
       {
         model: db.RelationshipType,
@@ -534,6 +349,22 @@ peopleController.getRelations = async (req, res) => {
   });
 
   return res.status(200).json(relations);
+};
+
+peopleController.getConvictions = async (req, res) => {
+  let person = await db.Person.findByPk(req.params.id);
+  let convictions = await person.getConvictions({
+    include: [
+      {
+        attributes: convictionAttributes,
+        model: db.Country,
+        as: 'country',
+        attributes: countryAttributes
+      }
+    ]
+  });
+
+  return res.status(200).json(convictions);
 };
 
 peopleController.update = async (req, res) => {

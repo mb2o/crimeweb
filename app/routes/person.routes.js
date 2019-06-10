@@ -11,6 +11,7 @@ peopleRouter.get('/search', peopleController.find);
 peopleRouter.get('/', peopleController.findAll);
 peopleRouter.get('/:id', peopleController.findById);
 peopleRouter.get('/:id/relations', peopleController.getRelations);
+peopleRouter.get('/:id/convictions', peopleController.getConvictions);
 
 peopleRouter.patch('/:id', [auth.verifyToken], peopleController.update);
 

@@ -26,52 +26,80 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       underscored: true,
-      tableName: 'people'
+      tableName: 'people',
+      getterMethods: {
+        fullname() {
+          return this.firstname + ' ' + this.lastname;
+        }
+      }
     }
   );
 
   Person.associate = function(models) {
     Person.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+
     Person.belongsTo(models.Country, {
       foreignKey: 'birthcountry_id',
       as: 'birthcountry'
     });
+
     Person.belongsTo(models.Country, {
       foreignKey: 'deathcountry_id',
       as: 'deathcountry'
     });
+
     Person.belongsTo(models.CauseOfDeath, {
       foreignKey: 'causeofdeath_id',
       as: 'cause_of_death'
     });
+
     Person.belongsTo(models.MannerOfDeath, {
       foreignKey: 'mannerofdeath_id',
       as: 'manner_of_death'
     });
+
     Person.belongsTo(models.Classification, {
       foreignKey: 'classification_id',
       as: 'classification'
     });
 
-    Person.hasMany(models.Crime, { foreignKey: 'criminal_id', as: 'crimes' });
-    Person.hasMany(models.Crime, { foreignKey: 'victim_id', as: 'victim_of' });
+    // HASMANY
+
+    Person.hasMany(models.Crime, {
+      foreignKey: 'criminal_id',
+      as: 'crimes',
+      onDelete: 'CASCADE'
+    });
+
+    Person.hasMany(models.Crime, {
+      foreignKey: 'victim_id',
+      as: 'victim_of',
+      onDelete: 'CASCADE'
+    });
+
     Person.hasMany(models.Conviction, {
       foreignKey: 'person_id',
-      as: 'convictions'
+      as: 'convictions',
+      onDelete: 'CASCADE'
     });
+
     Person.hasMany(models.Detail, {
       foreignKey: 'person_id',
-      as: 'details'
+      as: 'details',
+      onDelete: 'CASCADE'
     });
+
     Person.hasMany(models.Event, {
       foreignKey: 'person_id',
-      as: 'events'
+      as: 'events',
+      onDelete: 'CASCADE'
     });
 
     Person.belongsToMany(models.Tag, {
       through: 'people_tags',
       foreignKey: 'person_id',
-      as: 'tags'
+      as: 'tags',
+      onDelete: 'CASCADE'
     });
   };
 

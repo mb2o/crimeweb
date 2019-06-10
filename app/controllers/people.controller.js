@@ -4,9 +4,9 @@ const { Op } = db.Sequelize;
 const peopleController = {};
 
 peopleController.create = async (req, res) => {
-  let person = await db.Person.create({ ...req.body });
+  let result = await db.Person.create({ ...req.body });
 
-  return res.status(201).json(person);
+  return res.status(201).json(result);
 };
 
 peopleController.find = async (req, res) => {
@@ -193,13 +193,13 @@ peopleController.find = async (req, res) => {
     };
   }
 
-  let people = await db.Person.findAll(filter);
+  let result = await db.Person.findAll(filter);
 
-  return res.status(200).json(people);
+  return res.status(200).json(result);
 };
 
 peopleController.findAll = async (req, res) => {
-  let people = await db.Person.findAll({
+  let result = await db.Person.findAll({
     include: [
       {
         model: db.User,
@@ -358,11 +358,11 @@ peopleController.findAll = async (req, res) => {
     limit: 15
   });
 
-  return res.status(200).json(people);
+  return res.status(200).json(result);
 };
 
 peopleController.findById = async (req, res) => {
-  let person = await db.Person.findByPk(req.params.id, {
+  let result = await db.Person.findByPk(req.params.id, {
     include: [
       {
         model: db.User,
@@ -519,7 +519,7 @@ peopleController.findById = async (req, res) => {
     ]
   });
 
-  return res.status(200).json(person);
+  return res.status(200).json(result);
 };
 
 peopleController.update = async (req, res) => {
@@ -536,13 +536,59 @@ peopleController.update = async (req, res) => {
 };
 
 peopleController.delete = async (req, res) => {
-  await db.Person.destroy({
-    where: {
-      id: req.params.id
-    }
-  });
-
-  return res.status(200).send();
+  return db.sequelize
+    .transaction(t => {
+      return db.Person.findByPk(req.params.id, { transaction: t }).then(
+        person => {
+          return db.Crime.destroy(
+            { where: { criminal_id: person.dataValues.id } },
+            { transaction: t }
+          )
+            .then(() => {
+              return db.Crime.destroy(
+                { where: { victim_id: person.dataValues.id } },
+                { transaction: t }
+              );
+            })
+            .then(() => {
+              return db.Event.destroy(
+                { where: { person_id: person.dataValues.id } },
+                { transaction: t }
+              );
+            })
+            .then(() => {
+              return db.Detail.destroy(
+                { where: { person_id: person.dataValues.id } },
+                { transaction: t }
+              );
+            })
+            .then(() => {
+              return db.Conviction.destroy(
+                { where: { person_id: person.dataValues.id } },
+                { transaction: t }
+              );
+            })
+            .then(() => {
+              return person.getTags().then(
+                tags => {
+                  const tagList = tags.map(item => item.dataValues.id);
+                  return person.removeTags(tagList);
+                },
+                { transaction: t }
+              );
+            })
+            .then(
+              () => {
+                return person.destroy();
+              },
+              { transaction: t }
+            );
+        }
+      );
+    })
+    .then(() => {
+      return res.status(200).send();
+    });
 };
 
 module.exports = peopleController;

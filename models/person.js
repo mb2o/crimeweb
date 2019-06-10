@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 module.exports = (sequelize, DataTypes) => {
   const Person = sequelize.define(
     'Person',
@@ -27,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       is_deceased: DataTypes.BOOLEAN
     },
     {
-      underscored: true
+      underscored: true,
+      tableName: 'people'
     }
   );
 
@@ -67,6 +66,12 @@ module.exports = (sequelize, DataTypes) => {
     Person.hasMany(models.Event, {
       foreignKey: 'person_id',
       as: 'events'
+    });
+
+    Person.belongsToMany(models.Tag, {
+      through: 'people_tags',
+      foreignKey: 'person_id',
+      as: 'tags'
     });
   };
 

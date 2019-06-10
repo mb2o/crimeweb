@@ -3,13 +3,13 @@ const { Op } = db.Sequelize;
 
 const peopleController = {};
 
-peopleController.create = (req, res) => {
-  db.Person.create({ ...req.body }).then(person => {
-    res.status(201).json(person);
-  });
+peopleController.create = async (req, res) => {
+  let person = await db.Person.create({ ...req.body });
+
+  return res.status(201).json(person);
 };
 
-peopleController.find = (req, res) => {
+peopleController.find = async (req, res) => {
   let filter = {};
   let whereFilter = [];
 
@@ -180,18 +180,26 @@ peopleController.find = (req, res) => {
           model: db.MannerOfDeath,
           as: 'manner_of_death',
           attributes: ['title']
+        },
+        {
+          model: db.Tag,
+          as: 'tags',
+          attributes: ['id', 'title'],
+          through: {
+            attributes: []
+          }
         }
       ]
     };
   }
 
-  db.Person.findAll(filter).then(people => {
-    res.status(200).json(people);
-  });
+  let people = await db.Person.findAll(filter);
+
+  return res.status(200).json(people);
 };
 
-peopleController.findAll = (req, res) => {
-  db.Person.findAll({
+peopleController.findAll = async (req, res) => {
+  let people = await db.Person.findAll({
     include: [
       {
         model: db.User,
@@ -336,17 +344,25 @@ peopleController.findAll = (req, res) => {
         model: db.MannerOfDeath,
         as: 'manner_of_death',
         attributes: ['title']
+      },
+      {
+        model: db.Tag,
+        as: 'tags',
+        attributes: ['id', 'title'],
+        through: {
+          attributes: []
+        }
       }
     ],
     order: [['deathdate', 'DESC']],
-    limit: 30
-  }).then(people => {
-    res.json(people);
+    limit: 15
   });
+
+  return res.status(200).json(people);
 };
 
-peopleController.findById = (req, res) => {
-  db.Person.findByPk(req.params.id, {
+peopleController.findById = async (req, res) => {
+  let person = await db.Person.findByPk(req.params.id, {
     include: [
       {
         model: db.User,
@@ -491,34 +507,42 @@ peopleController.findById = (req, res) => {
         model: db.MannerOfDeath,
         as: 'manner_of_death',
         attributes: ['title']
+      },
+      {
+        model: db.Tag,
+        as: 'tags',
+        attributes: ['id', 'title'],
+        through: {
+          attributes: []
+        }
       }
     ]
-  }).then(person => {
-    res.status(200).json(person);
   });
+
+  return res.status(200).json(person);
 };
 
-peopleController.update = (req, res) => {
-  db.Person.update(
+peopleController.update = async (req, res) => {
+  await db.Person.update(
     { ...req.body },
     {
       where: {
         id: req.params.id
       }
     }
-  ).then(() => {
-    res.status(200).send();
-  });
+  );
+
+  return res.status(200).send();
 };
 
-peopleController.delete = (req, res) => {
-  db.Person.destroy({
+peopleController.delete = async (req, res) => {
+  await db.Person.destroy({
     where: {
       id: req.params.id
     }
-  }).then(() => {
-    res.status(200).send();
   });
+
+  return res.status(200).send();
 };
 
 module.exports = peopleController;

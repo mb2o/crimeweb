@@ -167,16 +167,6 @@ peopleController.find = async (req, res) => {
           ]
         },
         {
-          model: db.Detail,
-          as: 'details',
-          attributes: ['id', 'title', 'description']
-        },
-        {
-          model: db.Event,
-          as: 'events',
-          attributes: ['id', 'eventdate', 'description']
-        },
-        {
           model: db.MannerOfDeath,
           as: 'manner_of_death',
           attributes: ['title']
@@ -329,16 +319,6 @@ peopleController.findAll = async (req, res) => {
             attributes: ['id', 'name', 'iso_alpha_2']
           }
         ]
-      },
-      {
-        model: db.Detail,
-        as: 'details',
-        attributes: ['id', 'title', 'description']
-      },
-      {
-        model: db.Event,
-        as: 'events',
-        attributes: ['id', 'eventdate', 'description']
       },
       {
         model: db.MannerOfDeath,
@@ -494,16 +474,6 @@ peopleController.findById = async (req, res) => {
         ]
       },
       {
-        model: db.Detail,
-        as: 'details',
-        attributes: ['id', 'title', 'description']
-      },
-      {
-        model: db.Event,
-        as: 'events',
-        attributes: ['id', 'eventdate', 'description']
-      },
-      {
         model: db.MannerOfDeath,
         as: 'manner_of_death',
         attributes: ['title']
@@ -518,6 +488,10 @@ peopleController.findById = async (req, res) => {
       }
     ]
   });
+
+  if (!result) {
+    return res.status(404).json();
+  }
 
   return res.status(200).json(result);
 };
@@ -569,6 +543,8 @@ peopleController.delete = async (req, res) => {
               );
             })
             .then(() => {
+              console.log(Object.keys(person.__proto__));
+
               return person.getTags().then(
                 tags => {
                   const tagList = tags.map(item => item.dataValues.id);

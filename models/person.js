@@ -77,6 +77,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
+    Person.hasMany(models.Relationship, {
+      foreignKey: 'person1_id',
+      as: 'relations',
+      onDelete: 'CASCADE'
+    });
+
     Person.hasMany(models.Conviction, {
       foreignKey: 'person_id',
       as: 'convictions',
@@ -105,3 +111,88 @@ module.exports = (sequelize, DataTypes) => {
 
   return Person;
 };
+
+// Custom methods:
+// _customGetters;
+// _customSetters;
+// validators;
+// _hasCustomGetters;
+// _hasCustomSetters;
+// rawAttributes;
+// _isAttribute;
+
+// getUser;
+// setUser;
+// createUser;
+// getBirthcountry;
+// setBirthcountry;
+// createBirthcountry;
+// getDeathcountry;
+// setDeathcountry;
+// createDeathcountry;
+// getCause_of_death;
+// setCause_of_death;
+// createCause_of_death;
+// getManner_of_death;
+// setManner_of_death;
+// createManner_of_death;
+// getClassification;
+// setClassification;
+// createClassification;
+// getCrimes;
+// countCrimes;
+// hasCrime;
+// hasCrimes;
+// setCrimes;
+// addCrime;
+// addCrimes;
+// removeCrime;
+// removeCrimes;
+// createCrime;
+// getVictim_of;
+// countVictim_of;
+// hasVictim_of;
+// setVictim_of;
+// addVictim_of;
+// removeVictim_of;
+// createVictim_of;
+// getConvictions;
+// countConvictions;
+// hasConviction;
+// hasConvictions;
+// setConvictions;
+// addConviction;
+// addConvictions;
+// removeConviction;
+// removeConvictions;
+// createConviction;
+// getDetails;
+// countDetails;
+// hasDetail;
+// hasDetails;
+// setDetails;
+// addDetail;
+// addDetails;
+// removeDetail;
+// removeDetails;
+// createDetail;
+// getEvents;
+// countEvents;
+// hasEvent;
+// hasEvents;
+// setEvents;
+// addEvent;
+// addEvents;
+// removeEvent;
+// removeEvents;
+// createEvent;
+// getTags;
+// countTags;
+// hasTag;
+// hasTags;
+// setTags;
+// addTag;
+// addTags;
+// removeTag;
+// removeTags;
+// createTag;

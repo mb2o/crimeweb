@@ -10,6 +10,7 @@ peopleRouter.post('/', [auth.verifyToken], peopleController.create);
 peopleRouter.get('/search', peopleController.find);
 peopleRouter.get('/', peopleController.findAll);
 peopleRouter.get('/:id', peopleController.findById);
+peopleRouter.get('/:id/relations', peopleController.getRelations);
 
 peopleRouter.patch('/:id', [auth.verifyToken], peopleController.update);
 

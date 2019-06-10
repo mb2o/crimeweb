@@ -34,7 +34,7 @@ peopleController.find = async (req, res) => {
       where: {
         [Op.and]: whereFilter
       },
-      order: [['deathdate', 'DESC']],
+      order: [['lastname', 'ASC'], ['firstname', 'ASC']],
       limit: 30,
       include: [
         {
@@ -493,7 +493,47 @@ peopleController.findById = async (req, res) => {
     return res.status(404).json();
   }
 
+  // const relations = await result
+  //   .getRelations()
+  //   .map(r => r.dataValues.person2_id);
+  // console.log(relations);
+
+  //console.log(Object.keys(result.__proto__));
+
   return res.status(200).json(result);
+};
+
+peopleController.getRelations = async (req, res) => {
+  let person = await db.Person.findByPk(req.params.id);
+  let relations = await person.getRelations({
+    attributes: ['person2_id', 'relationshiptype_id'],
+    include: [
+      {
+        model: db.Person,
+        as: 'relation',
+        attributes: [
+          'id',
+          'birthdate',
+          'birthname',
+          'deathdate',
+          'firstname',
+          'lastname',
+          'gender',
+          'nicknames',
+          'photo',
+          'remark',
+          'is_deceased'
+        ]
+      },
+      {
+        model: db.RelationshipType,
+        as: 'relationship_type',
+        attributes: ['id', 'title']
+      }
+    ]
+  });
+
+  return res.status(200).json(relations);
 };
 
 peopleController.update = async (req, res) => {
@@ -543,8 +583,6 @@ peopleController.delete = async (req, res) => {
               );
             })
             .then(() => {
-              console.log(Object.keys(person.__proto__));
-
               return person.getTags().then(
                 tags => {
                   const tagList = tags.map(item => item.dataValues.id);

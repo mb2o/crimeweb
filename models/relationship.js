@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'person2_id',
       as: 'relation'
     });
+
+    Relationship.belongsTo(models.RelationshipType, {
+      foreignKey: 'relationshiptype_id',
+      as: 'relationship_type'
+    });
   };
 
   return Relationship;

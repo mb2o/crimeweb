@@ -26,12 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       underscored: true,
-      tableName: 'people',
-      getterMethods: {
-        fullname() {
-          return this.firstname + ' ' + this.lastname;
-        }
-      }
+      tableName: 'people'
     }
   );
 
@@ -67,32 +62,27 @@ module.exports = (sequelize, DataTypes) => {
 
     Person.hasMany(models.Crime, {
       foreignKey: 'criminal_id',
-      as: 'crimes',
-      onDelete: 'CASCADE'
+      as: 'crimes'
     });
 
     Person.hasMany(models.Crime, {
       foreignKey: 'victim_id',
-      as: 'victim_of',
-      onDelete: 'CASCADE'
+      as: 'victim_of'
     });
 
     Person.hasMany(models.Relationship, {
       foreignKey: 'person1_id',
-      as: 'relations',
-      onDelete: 'CASCADE'
+      as: 'relations'
     });
 
     Person.hasMany(models.Conviction, {
       foreignKey: 'person_id',
-      as: 'convictions',
-      onDelete: 'CASCADE'
+      as: 'convictions'
     });
 
     Person.hasMany(models.Detail, {
       foreignKey: 'person_id',
-      as: 'details',
-      onDelete: 'CASCADE'
+      as: 'details'
     });
 
     Person.hasMany(models.Event, {
@@ -124,21 +114,27 @@ module.exports = (sequelize, DataTypes) => {
 // getUser;
 // setUser;
 // createUser;
+
 // getBirthcountry;
 // setBirthcountry;
 // createBirthcountry;
+
 // getDeathcountry;
 // setDeathcountry;
 // createDeathcountry;
+
 // getCause_of_death;
 // setCause_of_death;
 // createCause_of_death;
+
 // getManner_of_death;
 // setManner_of_death;
 // createManner_of_death;
+
 // getClassification;
 // setClassification;
 // createClassification;
+
 // getCrimes;
 // countCrimes;
 // hasCrime;
@@ -149,6 +145,7 @@ module.exports = (sequelize, DataTypes) => {
 // removeCrime;
 // removeCrimes;
 // createCrime;
+
 // getVictim_of;
 // countVictim_of;
 // hasVictim_of;
@@ -156,6 +153,7 @@ module.exports = (sequelize, DataTypes) => {
 // addVictim_of;
 // removeVictim_of;
 // createVictim_of;
+
 // getConvictions;
 // countConvictions;
 // hasConviction;
@@ -166,6 +164,7 @@ module.exports = (sequelize, DataTypes) => {
 // removeConviction;
 // removeConvictions;
 // createConviction;
+
 // getDetails;
 // countDetails;
 // hasDetail;
@@ -176,6 +175,7 @@ module.exports = (sequelize, DataTypes) => {
 // removeDetail;
 // removeDetails;
 // createDetail;
+
 // getEvents;
 // countEvents;
 // hasEvent;
@@ -186,6 +186,7 @@ module.exports = (sequelize, DataTypes) => {
 // removeEvent;
 // removeEvents;
 // createEvent;
+
 // getTags;
 // countTags;
 // hasTag;
@@ -196,3 +197,14 @@ module.exports = (sequelize, DataTypes) => {
 // removeTag;
 // removeTags;
 // createTag;
+
+// getRelations;
+// countRelations;
+// hasRelation;
+// hasRelations;
+// setRelations;
+// addRelation;
+// addRelations;
+// removeRelation;
+// removeRelations;
+// createRelation;

@@ -143,6 +143,33 @@ peopleController.find = (req, res) => {
           model: db.Classification,
           as: 'classification',
           attributes: ['title']
+        },
+        {
+          model: db.Conviction,
+          as: 'convictions',
+          attributes: [
+            'id',
+            'duration',
+            'tbs',
+            'title',
+            'verdictdate',
+            'ecli',
+            'ecli_appeal',
+            'casenumber',
+            'country_id'
+          ],
+          include: [
+            {
+              model: db.Country,
+              as: 'country',
+              attributes: ['id', 'name', 'iso_alpha_2']
+            }
+          ]
+        },
+        {
+          model: db.Detail,
+          as: 'details',
+          attributes: ['id', 'title', 'description']
         }
       ]
     };
@@ -262,6 +289,33 @@ peopleController.findAll = (req, res) => {
         model: db.Classification,
         as: 'classification',
         attributes: ['title']
+      },
+      {
+        model: db.Conviction,
+        as: 'convictions',
+        attributes: [
+          'id',
+          'duration',
+          'tbs',
+          'title',
+          'verdictdate',
+          'ecli',
+          'ecli_appeal',
+          'casenumber',
+          'country_id'
+        ],
+        include: [
+          {
+            model: db.Country,
+            as: 'country',
+            attributes: ['id', 'name', 'iso_alpha_2']
+          }
+        ]
+      },
+      {
+        model: db.Detail,
+        as: 'details',
+        attributes: ['id', 'title', 'description']
       }
     ],
     order: [['deathdate', 'DESC']],
@@ -380,6 +434,33 @@ peopleController.findById = (req, res) => {
         model: db.Classification,
         as: 'classification',
         attributes: ['title']
+      },
+      {
+        model: db.Conviction,
+        as: 'convictions',
+        attributes: [
+          'id',
+          'duration',
+          'tbs',
+          'title',
+          'verdictdate',
+          'ecli',
+          'ecli_appeal',
+          'casenumber',
+          'country_id'
+        ],
+        include: [
+          {
+            model: db.Country,
+            as: 'country',
+            attributes: ['id', 'name', 'iso_alpha_2']
+          }
+        ]
+      },
+      {
+        model: db.Detail,
+        as: 'details',
+        attributes: ['id', 'title', 'description']
       }
     ]
   }).then(person => {

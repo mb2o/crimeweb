@@ -8,7 +8,9 @@ const authController = {};
 
 authController.getUser = async (req, res) => {
   try {
-    const user = await db.User.findByPk(req.userId);
+    const user = await db.User.findByPk(req.user.id, {
+      attributes: ['id', 'name', 'email']
+    });
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -73,7 +75,13 @@ authController.signin = (req, res) => {
         });
       }
 
-      var token = jwt.sign({ id: user.id }, env.SECRET, {
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+
+      var token = jwt.sign(payload, env.SECRET, {
         expiresIn: env.EXPIRES_IN // expires in 24 hours
       });
 

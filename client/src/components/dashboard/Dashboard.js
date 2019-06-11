@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PeopleList from '../people/PeopleList';
 
 const Dashboard = ({ auth: { user } }) => {
   return (
@@ -9,6 +10,7 @@ const Dashboard = ({ auth: { user } }) => {
       <p className="lead">
         <i className="fas fa-user" /> Welcome {user && user.name}
       </p>
+      <PeopleList />
     </Fragment>
   );
 };

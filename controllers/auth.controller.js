@@ -18,86 +18,84 @@ authController.getUser = async (req, res) => {
   }
 };
 
-authController.signup = (req, res) => {
-  db.User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
-  })
-    .then(user =>
+authController.signup = async (req, res) => {
+  try {
+    let user = await db.User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8)
+    });
+
+    if (user) {
       res.status(201).json({
         result: 'success',
         data: user
-      })
-    )
-    .catch(err => {
-      if (err.name === 'SequelizeValidationError') {
-        err.errors = err.errors.map(error => {
-          return {
-            field: error.path,
-            message: error.message
-          };
-        });
-      }
-
-      res.status(500).json({
-        result: 'failure',
-        reason: err
       });
+    }
+  } catch (err) {
+    if (err.name === 'SequelizeValidationError') {
+      err.errors = err.errors.map(error => {
+        return {
+          field: error.path,
+          message: error.message
+        };
+      });
+    }
+
+    res.status(500).json({
+      result: 'failure',
+      reason: err
     });
+  }
 };
 
-authController.signin = (req, res) => {
-  db.User.findOne({
-    where: {
-      email: req.body.email
-    }
-  })
-    .then(user => {
-      if (!user) {
-        return res.status(404).json({
-          auth: false,
-          result: 'failure',
-          reason: 'Email not found'
-        });
+authController.signin = async (req, res) => {
+  try {
+    let user = await db.User.findOne({
+      where: {
+        email: req.body.email
       }
+    });
 
-      var passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        user.password
-      );
-
-      if (!passwordIsValid) {
-        return res.status(401).json({
-          auth: false,
-          result: 'failure',
-          reason: 'Invalid password'
-        });
-      }
-
-      const payload = {
-        user: {
-          id: user.id
-        }
-      };
-
-      var token = jwt.sign(payload, env.SECRET, {
-        expiresIn: env.EXPIRES_IN // expires in 24 hours
-      });
-
-      res.status(200).json({
-        auth: true,
-        token,
-        result: 'success'
-      });
-    })
-    .catch(err => {
-      res.status(500).json({
+    if (!user) {
+      return res.status(404).json({
         auth: false,
         result: 'failure',
-        reason: err
+        reason: 'Email not found'
       });
+    }
+
+    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+    if (!passwordIsValid) {
+      return res.status(401).json({
+        auth: false,
+        result: 'failure',
+        reason: 'Invalid password'
+      });
+    }
+
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+
+    var token = jwt.sign(payload, env.SECRET, {
+      expiresIn: env.EXPIRES_IN // expires in 24 hours
     });
+
+    res.status(200).json({
+      auth: true,
+      token,
+      result: 'success'
+    });
+  } catch (err) {
+    res.status(500).json({
+      auth: false,
+      result: 'failure',
+      reason: err
+    });
+  }
 };
 
 module.exports = authController;

@@ -27,15 +27,15 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign In</h1>
+      <h1 className="large text-primary">Inloggen</h1>
       <p className="lead">
-        <i className="fas fa-user" /> Sign Into Your Account
+        <i className="fas fa-user" /> Log in met je account
       </p>
       <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input
             type="email"
-            placeholder="Email Address"
+            placeholder="Email adres"
             name="email"
             value={email}
             onChange={e => onChange(e)}
@@ -45,7 +45,7 @@ const Login = ({ login, isAuthenticated }) => {
         <div className="form-group">
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Wachtwoord"
             name="password"
             value={password}
             onChange={e => onChange(e)}
@@ -55,7 +55,7 @@ const Login = ({ login, isAuthenticated }) => {
         <input type="submit" className="btn btn-primary" value="Login" />
       </form>
       <p className="my-1">
-        Don't have an account? <Link to="/register">Sign Up</Link>
+        Nog geen account? <Link to="/register">Registreer</Link>
       </p>
     </Fragment>
   );

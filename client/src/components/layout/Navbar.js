@@ -7,15 +7,12 @@ import { logout } from '../../actions/auth';
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
-      <li>
+      {/* <li>
         <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <Link to="/posts">Posts</Link>
-      </li>
+      </li> */}
       <li>
         <Link to="/dashboard">
-          <i className="fas fa-user" />{' '}
+          <i className="fas fa-tachometer-alt" />{' '}
           <span className="hide-sm">Dashboard</span>
         </Link>
       </li>
@@ -30,14 +27,14 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const guestLinks = (
     <ul>
-      <li>
+      {/* <li>
         <Link to="/profiles">Developers</Link>
+      </li> */}
+      <li>
+        <Link to="/register">Registreer</Link>
       </li>
       <li>
-        <Link to="/register">Register</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
+        <Link to="/login">Log in</Link>
       </li>
     </ul>
   );
@@ -46,7 +43,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <nav className="navbar bg-dark">
       <h1>
         <Link to="/">
-          <i className="fas fa-code" /> DevConnector
+          <i className="fas fa-book-dead" /> CrimeWeb
         </Link>
       </h1>
       {!loading && (

@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const app = express();
 
 const db = require('./models');
+const env = require('./config/env');
 
 // Setup HTTP logging middleware
 app.use(morgan('dev'));
@@ -24,6 +25,6 @@ app.use('/api/people', require('./routes/person.routes'));
 db.sequelize
   .sync()
   .then(() => {
-    app.listen(3000, () => console.log('Express server is running!'));
+    app.listen(env.PORT, () => console.log('Express server is running!'));
   })
   .catch(err => console.error(err));

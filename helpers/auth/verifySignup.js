@@ -1,4 +1,4 @@
-const db = require('../../../models');
+const db = require('../../models');
 
 const signUpVerify = {};
 
@@ -13,7 +13,7 @@ signUpVerify.checkDuplicateEmail = (req, res, next) => {
         result: 'failure',
         reason: 'Email is already in use'
       });
-      
+
       return;
     }
 

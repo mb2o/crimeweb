@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+const db = require('../models');
+const env = require('../config/env');
+
 const authController = {};
-const db = require('../../models');
-const env = require('../../config/env');
 
 authController.signup = (req, res) => {
   db.User.create({

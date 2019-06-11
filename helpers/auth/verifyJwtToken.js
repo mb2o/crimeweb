@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const env = require('../../../config/env.js');
+const env = require('../../config/env.js');
 
 const auth = {};
 

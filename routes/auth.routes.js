@@ -9,6 +9,7 @@ authRouter.post(
   [verifySignUp.checkDuplicateEmail],
   authController.signup
 );
+
 authRouter.post('/signin', authController.signin);
 
 module.exports = authRouter;

@@ -15,12 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-// Static directory
-app.use(express.static('app/public'));
-
 // Load routes
-app.use('/api/auth', require('./app/routes/auth.routes'));
-app.use('/api/people', require('./app/routes/person.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
+app.use('/api/people', require('./routes/person.routes'));
 
 // Sync db
 // Start Express server when successful

@@ -2,7 +2,6 @@ const express = require('express');
 const peopleRouter = express.Router();
 
 const auth = require('../helpers/auth/verifyJwtToken');
-
 const peopleController = require('../controllers/people.controller');
 
 peopleRouter.post('/', [auth.verifyToken], peopleController.create);

@@ -31,6 +31,7 @@ export default function PeopleList() {
           <thead>
             <tr>
               <th />
+              <th />
               <th>Naam</th>
               <th>Leeftijd</th>
               <th>Manier van Overlijden</th>
@@ -44,7 +45,16 @@ export default function PeopleList() {
                   <img className="ui avatar image" src={person.photo} alt="" />
                 </td>
                 <td>
-                  {person.firstname} {person.lastname}
+                  <i
+                    className={
+                      'flag ' +
+                      (person.birthcountry &&
+                        person.birthcountry.iso_alpha_2.toLowerCase())
+                    }
+                  />
+                </td>
+                <td>
+                  {person.firstname} {person.lastname.toUpperCase()}
                 </td>
                 <td>{person.age}</td>
                 <td>{person.manner_of_death.title}</td>

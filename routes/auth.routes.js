@@ -4,6 +4,7 @@ const authRouter = express.Router();
 const authController = require('../controllers/auth.controller');
 const verifySignUp = require('../helpers/auth/verifySignup');
 
+authRouter.get('/', authController.getUser);
 authRouter.post(
   '/signup',
   [verifySignUp.checkDuplicateEmail],

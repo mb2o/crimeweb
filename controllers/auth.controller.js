@@ -6,6 +6,16 @@ const env = require('../config/env');
 
 const authController = {};
 
+authController.getUser = async (req, res) => {
+  try {
+    const user = await db.User.findByPk(req.userId);
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
 authController.signup = (req, res) => {
   db.User.create({
     name: req.body.name,
@@ -69,7 +79,7 @@ authController.signin = (req, res) => {
 
       res.status(200).json({
         auth: true,
-        accessToken: token,
+        token,
         result: 'success'
       });
     })

@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import HomicideCounter from '../statistics/HomicideCounter';
-import PeopleList from '../people/PeopleList';
-import NationalityCounter from '../statistics/NationalityCounter';
 import AgeCounter from '../statistics/AgeCounter';
+import HomicideCounter from '../statistics/HomicideCounter';
+import NationalityCounter from '../statistics/NationalityCounter';
+import PeopleList from '../people/PeopleList';
 
 const Dashboard = ({ auth: { user } }) => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import useCount from './useCount';
+import useCount from '../hooks/useCount';
 
 export default function NationalityCounter() {
   const data = useCount('/api/stats/nationalityCount', { count: 0 });

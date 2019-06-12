@@ -1,26 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import Spinner from '../layout/Spinner';
-
-const PEOPLE_SERVICE_URL = '/api/people';
+import usePeople from '../hooks/usePeople';
 
 export default function PeopleList() {
-  const [data, setData] = useState({ people: [] });
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchPeople = async () => {
-      setIsLoading(true);
-
-      const result = await axios.get(PEOPLE_SERVICE_URL);
-
-      setData({ people: result.data });
-      setIsLoading(false);
-    };
-
-    fetchPeople();
-  }, []);
+  const [data, isLoading] = usePeople('/api/people', { people: [] });
 
   return (
     <div>

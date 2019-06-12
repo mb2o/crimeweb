@@ -1,5 +1,5 @@
 import React from 'react';
-import useCount from './useCount';
+import useCount from '../hooks/useCount';
 
 export default function HomicideCounter() {
   const data = useCount('/api/stats/homicideCount', { count: 0 });

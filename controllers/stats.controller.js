@@ -2,6 +2,16 @@ const db = require('../models');
 
 const statsController = {};
 
+statsController.homicideCount = async (req, res) => {
+  db.sequelize
+    .query('select count(*) as count from people where mannerofdeath_id = 38', {
+      type: db.sequelize.QueryTypes.SELECT
+    })
+    .then(count => {
+      return res.status(200).json(count);
+    });
+};
+
 statsController.homicidesPerTownship = async (req, res) => {
   db.sequelize
     .query(

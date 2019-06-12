@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function HomicideCounter() {
+export default function NationalityCounter() {
   const [data, setData] = useState({ count: 0 });
 
   useEffect(() => {
     const fetchCount = async () => {
-      const result = await axios.get('/api/stats/homicideCount');
+      const result = await axios.get('/api/stats/nationalityCount');
       setData({ count: result.data[0].count });
     };
 
@@ -14,9 +14,9 @@ export default function HomicideCounter() {
   }, []);
 
   return (
-    <div className="ui red statistic">
+    <div className="ui green statistic">
       <div className="value">{data.count}</div>
-      <div className="label">Moorden</div>
+      <div className="label">Nationaliteiten</div>
     </div>
   );
 }

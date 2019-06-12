@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import HomicideCounter from '../statistics/HomicideCounter';
 import PeopleList from '../people/PeopleList';
+import NationalityCounter from '../statistics/NationalityCounter';
+import AgeCounter from '../statistics/AgeCounter';
 
 const Dashboard = ({ auth: { user } }) => {
   return (
@@ -13,9 +15,15 @@ const Dashboard = ({ auth: { user } }) => {
         <i className="fas fa-user" /> Welkom {user && user.name}
       </p>
 
-      <div className="ui statistics">
+      <div className="ui horizontal divider">Statistiek</div>
+
+      <div className="ui three statistics">
         <HomicideCounter />
+        <NationalityCounter />
+        <AgeCounter />
       </div>
+
+      <div className="ui divider" />
 
       <PeopleList />
     </Fragment>

@@ -1,0 +1,14 @@
+OVERZICHT
+- moorden deze maand
+- aantal moorden dit jaar
+- type misdadigers
+
+STATISTIEK
+- moorden per nationaliteit
+- leeftijdscategorieen
+- doodsoorzaken
+- https://opendata.cbs.nl/ODataApi/odata/83958NED/Woonplaatsen
+- 
+- 
+
+

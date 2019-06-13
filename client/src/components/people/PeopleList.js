@@ -3,8 +3,15 @@ import React from 'react';
 import Spinner from '../layout/Spinner';
 import usePeople from '../hooks/usePeople';
 
-export default function PeopleList() {
-  const [data, isLoading] = usePeople('/api/people', { people: [] });
+export default function PeopleList(props) {
+  let city = props.match.params.city;
+  let sql = '/api/people';
+
+  if (city) {
+    sql = `/api/people/search?deathcity=${city}`;
+  }
+
+  const [data, isLoading] = usePeople(sql, { people: [] });
 
   return (
     <div>

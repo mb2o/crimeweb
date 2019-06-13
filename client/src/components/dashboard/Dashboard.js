@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import AgeCounter from '../statistics/AgeCounter';
 import HomicideCounter from '../statistics/HomicideCounter';
 import NationalityCounter from '../statistics/NationalityCounter';
-import PeopleList from '../people/PeopleList';
 
 const Dashboard = ({ auth: { user } }) => {
   return (
@@ -24,8 +23,6 @@ const Dashboard = ({ auth: { user } }) => {
       </div>
 
       <div className="ui divider" />
-
-      <PeopleList />
     </Fragment>
   );
 };

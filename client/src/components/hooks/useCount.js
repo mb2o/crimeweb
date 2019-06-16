@@ -7,6 +7,7 @@ export default (url, initialState) => {
   useEffect(() => {
     const fetchCount = async () => {
       const result = await axios.get(url);
+
       setData({ count: result.data[0].count });
     };
 

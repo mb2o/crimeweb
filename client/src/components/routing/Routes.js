@@ -2,15 +2,15 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Alert from '../layout/Alert';
+import CityList from '../homicides/CityList';
+import CountyList from '../homicides/CountyList';
 import Dashboard from '../dashboard/Dashboard';
+import HomicideList from '../homicides/HomicideList';
 import Login from '../auth/Login';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from './PrivateRoute';
 import Register from '../auth/Register';
-import CountyList from '../homicides/CountyList';
 import TownshipList from '../homicides/TownshipList';
-import CityList from '../homicides/CityList';
-import PeopleList from '../people/PeopleList';
 
 const Routes = () => {
   return (
@@ -23,7 +23,7 @@ const Routes = () => {
         <PrivateRoute
           exact
           path="/homicides/city/:city"
-          component={PeopleList}
+          component={HomicideList}
         />
         <PrivateRoute exact path="/homicides" component={CountyList} />
         <PrivateRoute

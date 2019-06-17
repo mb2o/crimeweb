@@ -1,6 +1,126 @@
 const db = require('../models');
+const { Op } = db.Sequelize;
+const {
+  personAttributes,
+  countryAttributes,
+  crimeAttributes
+} = require('../helpers/attributes');
 
 const homicidesController = {};
+
+homicidesController.homicides = async (req, res) => {
+  let whereFilter = [
+    {
+      mannerofdeath_id: {
+        [Op.eq]: 38
+      }
+    }
+  ];
+
+  if (req.query.city) {
+    whereFilter.push({
+      deathcity: {
+        [Op.eq]: `${req.query.city}`
+      }
+    });
+  }
+
+  let filter = {
+    where: {
+      [Op.and]: whereFilter
+    },
+    order: [['lastname', 'ASC'], ['firstname', 'ASC']],
+    limit: 30,
+    include: [
+      {
+        model: db.User,
+        as: 'user',
+        attributes: ['id', 'name']
+      },
+      {
+        model: db.Country,
+        as: 'birthcountry',
+        attributes: countryAttributes
+      },
+      {
+        model: db.Country,
+        as: 'deathcountry',
+        attributes: countryAttributes
+      },
+      {
+        model: db.Crime,
+        as: 'crimes',
+        attributes: crimeAttributes,
+        include: [
+          {
+            model: db.Person,
+            as: 'victim',
+            attributes: personAttributes
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
+          }
+        ]
+      },
+      {
+        model: db.Crime,
+        as: 'victim_of',
+        attributes: crimeAttributes,
+        include: [
+          {
+            model: db.Person,
+            as: 'perpetrator',
+            attributes: personAttributes
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
+          }
+        ]
+      },
+      {
+        model: db.CauseOfDeath,
+        as: 'cause_of_death',
+        attributes: ['title']
+      },
+      {
+        model: db.Classification,
+        as: 'classification',
+        attributes: ['title']
+      },
+      {
+        model: db.MannerOfDeath,
+        as: 'manner_of_death',
+        attributes: ['title']
+      },
+      {
+        model: db.Tag,
+        as: 'tags',
+        attributes: ['id', 'title'],
+        through: {
+          attributes: []
+        }
+      }
+    ]
+  };
+
+  let result = await db.Person.findAll(filter);
+
+  return res.status(200).json(result);
+};
 
 homicidesController.homicidesPerCity = async (req, res) => {
   let sql =

@@ -5,10 +5,10 @@ import usePeople from '../hooks/usePeople';
 
 export default function PeopleList(props) {
   let city = props.match.params.city;
-  let sql = '/api/people';
+  let sql = '/api/homicides';
 
   if (city) {
-    sql = `/api/people/search?deathcity=${city}&mannerofdeath_id=38`;
+    sql = `/api/homicides?city=${city}`;
   }
 
   const [data, isLoading] = usePeople(sql, { people: [] });

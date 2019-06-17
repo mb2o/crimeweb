@@ -3,6 +3,8 @@ const homicideRouter = express.Router();
 
 const homicideController = require('../controllers/homicides.controller');
 
+homicideRouter.get('/', homicideController.homicides);
+
 homicideRouter.get('/homicidesPerCity', homicideController.homicidesPerCity);
 
 homicideRouter.get(

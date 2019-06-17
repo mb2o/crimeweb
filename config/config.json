@@ -4,7 +4,8 @@
     "password": null,
     "database": "crimeweb",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timezone": "+02:00"
   },
   "production": {
     "username": "root",

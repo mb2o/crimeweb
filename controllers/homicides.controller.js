@@ -1,10 +1,14 @@
+const moment = require('moment');
 const db = require('../models');
 const { Op } = db.Sequelize;
+
 const {
   personAttributes,
   countryAttributes,
   crimeAttributes
 } = require('../helpers/attributes');
+
+moment.utc().format();
 
 const homicidesController = {};
 
@@ -17,10 +21,162 @@ homicidesController.homicides = async (req, res) => {
     }
   ];
 
+  if (req.params.year && !req.params.month && !req.params.day) {
+    whereFilter.push({
+      deathdate: {
+        [Op.between]: [`${req.params.year}-01-01`, `${req.params.year}-12-31`]
+      }
+    });
+  }
+
+  if (req.params.year && req.params.month && !req.params.day) {
+    whereFilter.push({
+      deathdate: {
+        [Op.between]: [
+          `${req.params.year}-${req.params.month}-01`,
+          `${req.params.year}-${req.params.month}-${moment(
+            `${req.params.year}-${req.params.month}`,
+            'YYYY-MM'
+          ).daysInMonth()}`
+        ]
+      }
+    });
+  }
+
+  if (req.params.year && req.params.month && req.params.day) {
+    whereFilter.push({
+      deathdate: {
+        [Op.eq]: `${req.params.year}-${req.params.month}-${req.params.day}`
+      }
+    });
+  }
+
   if (req.query.city) {
     whereFilter.push({
       deathcity: {
         [Op.eq]: `${req.query.city}`
+      }
+    });
+  }
+
+  let filter = {
+    where: {
+      [Op.and]: whereFilter
+    },
+    order: [['lastname', 'ASC'], ['firstname', 'ASC']],
+    limit: 30,
+    include: [
+      {
+        model: db.User,
+        as: 'user',
+        attributes: ['id', 'name']
+      },
+      {
+        model: db.Country,
+        as: 'birthcountry',
+        attributes: countryAttributes
+      },
+      {
+        model: db.Country,
+        as: 'deathcountry',
+        attributes: countryAttributes
+      },
+      {
+        model: db.Crime,
+        as: 'crimes',
+        attributes: crimeAttributes,
+        include: [
+          {
+            model: db.Person,
+            as: 'victim',
+            attributes: personAttributes
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
+          }
+        ]
+      },
+      {
+        model: db.Crime,
+        as: 'victim_of',
+        attributes: crimeAttributes,
+        include: [
+          {
+            model: db.Person,
+            as: 'perpetrator',
+            attributes: personAttributes
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['title']
+          }
+        ]
+      },
+      {
+        model: db.CauseOfDeath,
+        as: 'cause_of_death',
+        attributes: ['title']
+      },
+      {
+        model: db.Classification,
+        as: 'classification',
+        attributes: ['title']
+      },
+      {
+        model: db.MannerOfDeath,
+        as: 'manner_of_death',
+        attributes: ['title']
+      },
+      {
+        model: db.Tag,
+        as: 'tags',
+        attributes: ['id', 'title'],
+        through: {
+          attributes: []
+        }
+      }
+    ]
+  };
+
+  let result = await db.Person.findAll(filter);
+
+  return res.status(200).json(result);
+};
+
+homicidesController.homicidesBetween = async (req, res) => {
+  let whereFilter = [
+    {
+      mannerofdeath_id: {
+        [Op.eq]: 38
+      }
+    }
+  ];
+
+  if (req.query.from) {
+    whereFilter.push({
+      deathdate: {
+        [Op.gte]: `${req.query.from}`
+      }
+    });
+  }
+
+  if (req.query.to) {
+    whereFilter.push({
+      deathdate: {
+        [Op.lte]: `${req.query.to}`
       }
     });
   }

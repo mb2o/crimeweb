@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -22,7 +23,27 @@ const Dashboard = ({ auth: { user } }) => {
         <AgeCounter />
       </div>
 
-      <div className="ui divider" />
+      <div className="ui celled ordered list">
+        <div className="item">
+          <Link to="/homicides">Moorden deze maand</Link>
+        </div>
+        <div className="item">
+          Moorden
+          <div className="list">
+            <div className="item">
+              <Link to="/homicides">
+                Moorden zoeken op geografische locatie
+              </Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides">Moorden deze maand</Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides">Moorden dit jaar</Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };

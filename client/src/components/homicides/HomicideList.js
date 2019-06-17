@@ -3,10 +3,10 @@ import React from 'react';
 import Spinner from '../layout/Spinner';
 import usePeople from '../hooks/usePeople';
 
-export default function PeopleList(props) {
-  let city = props.match.params.city;
+export default function HomicideList(props) {
   let sql = '/api/homicides';
 
+  let city = props.match.params.city;
   if (city) {
     sql = `/api/homicides?city=${city}`;
   }

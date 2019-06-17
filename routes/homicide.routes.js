@@ -22,4 +22,10 @@ homicideRouter.get(
   homicideController.homicidesPerCountryPart
 );
 
+homicideRouter.get('/homicidesBetween', homicideController.homicidesBetween);
+
+homicideRouter.get('/:year', homicideController.homicides);
+homicideRouter.get('/:year/:month', homicideController.homicides);
+homicideRouter.get('/:year/:month/:day', homicideController.homicides);
+
 module.exports = homicideRouter;

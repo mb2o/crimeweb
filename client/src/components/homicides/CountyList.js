@@ -5,7 +5,7 @@ import Spinner from '../layout/Spinner';
 import useStats from '../hooks/useStats';
 
 export default function CountyList() {
-  const [data, isLoading] = useStats('/api/stats/homicidesPerCounty', {
+  const [data, isLoading] = useStats('/api/homicides/homicidesPerCounty', {
     stats: []
   });
 

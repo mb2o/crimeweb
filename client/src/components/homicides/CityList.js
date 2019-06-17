@@ -8,7 +8,7 @@ export default function CityList(props) {
   let township = props.match.params.township;
 
   const [data, isLoading] = useStats(
-    `/api/stats/homicidesPerCity?township=${township}`,
+    `/api/homicides/homicidesPerCity?township=${township}`,
     {
       stats: []
     }

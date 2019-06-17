@@ -16,7 +16,7 @@ export default function CountyList(props) {
   });
 
   const [data, isLoading] = useStats(
-    `/api/stats/homicidesPerTownship?county=${county}`,
+    `/api/homicides/homicidesPerTownship?county=${county}`,
     {
       stats: []
     }

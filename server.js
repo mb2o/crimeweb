@@ -19,6 +19,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 // Load routes
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/people', require('./routes/person.routes'));
+app.use('/api/homicides', require('./routes/homicide.routes'));
 app.use('/api/stats', require('./routes/stat.routes'));
 
 // Sync db

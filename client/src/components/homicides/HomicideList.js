@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Spinner from '../layout/Spinner';
 import usePeople from '../hooks/usePeople';
 
 export default function HomicideList(props) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   let sql = '/api/homicides';
 
   let city = props.match.params.city;
@@ -12,6 +16,10 @@ export default function HomicideList(props) {
   }
 
   const [data, isLoading] = usePeople(sql, { people: [] });
+
+  const showDetails = id => {
+    props.history.push('/people/' + id);
+  };
 
   return (
     <div>
@@ -31,7 +39,7 @@ export default function HomicideList(props) {
           </thead>
           <tbody>
             {data.people.map(person => (
-              <tr key={person.id}>
+              <tr key={person.id} onClick={() => showDetails(person.id)}>
                 <td>
                   <img className="ui avatar image" src={person.photo} alt="" />
                 </td>

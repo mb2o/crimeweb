@@ -8,6 +8,7 @@ import Dashboard from '../dashboard/Dashboard';
 import HomicideList from '../homicides/HomicideList';
 import Login from '../auth/Login';
 import NotFound from '../layout/NotFound';
+import Person from '../people/Person';
 import PrivateRoute from './PrivateRoute';
 import Register from '../auth/Register';
 import TownshipList from '../homicides/TownshipList';
@@ -19,7 +20,9 @@ const Routes = () => {
       <Switch>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
+
         <PrivateRoute
           exact
           path="/homicides/city/:city"
@@ -36,6 +39,9 @@ const Routes = () => {
           path="/homicides/:county/:township"
           component={CityList}
         />
+
+        <PrivateRoute exact path="/people/:id" component={Person} />
+
         <Route component={NotFound} />
       </Switch>
     </section>

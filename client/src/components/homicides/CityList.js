@@ -35,7 +35,9 @@ export default function CityList(props) {
             {data.stats.map(stat => (
               <tr key={stat.city}>
                 <td>
-                  <Link to={`/homicides/city/${stat.city}`}>{stat.city}</Link>
+                  <Link to={`/homicides/geographical/city/${stat.city}`}>
+                    {stat.city}
+                  </Link>
                 </td>
                 <td>{stat.homicides}</td>
               </tr>

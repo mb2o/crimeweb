@@ -39,7 +39,8 @@ export default function CountyList(props) {
             {data.stats.map(stat => (
               <tr key={stat.township}>
                 <td>
-                  <Link to={`/homicides/${county}/${stat.township}`}>
+                  <Link
+                    to={`/homicides/geographical/${county}/${stat.township}`}>
                     {stat.township}
                   </Link>
                 </td>

@@ -30,7 +30,7 @@ export default function NationalityList(props) {
             {data.stats.map(stat => (
               <tr key={stat.id}>
                 <td>
-                  <Link to={`/homicides/country/${stat.id}`}>
+                  <Link to={`/homicides/nationalities/country/${stat.id}`}>
                     {stat.country}
                   </Link>
                 </td>

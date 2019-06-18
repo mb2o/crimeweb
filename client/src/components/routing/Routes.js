@@ -26,26 +26,51 @@ const Routes = () => {
 
         <PrivateRoute
           exact
-          path="/homicides/country/:countryId"
+          path="/homicides/current/month"
           component={HomicideList}
         />
+
         <PrivateRoute
           exact
-          path="/homicides/city/:city"
+          path="/homicides/current/year"
           component={HomicideList}
         />
+
         <PrivateRoute
           exact
-          path="/homicides/:county"
+          path="/homicides/nationalities"
+          component={NationalityList}
+        />
+
+        <PrivateRoute
+          exact
+          path="/homicides/nationalities/country/:countryId"
+          component={HomicideList}
+        />
+
+        <PrivateRoute
+          exact
+          path="/homicides/geographical"
+          component={CountyList}
+        />
+
+        <PrivateRoute
+          exact
+          path="/homicides/geographical/city/:city"
+          component={HomicideList}
+        />
+
+        <PrivateRoute
+          exact
+          path="/homicides/geographical/:county"
           component={TownshipList}
         />
+
         <PrivateRoute
           exact
-          path="/homicides/:county/:township"
+          path="/homicides/geographical/:county/:township"
           component={CityList}
         />
-        <PrivateRoute exact path="/homicides" component={CountyList} />
-        <PrivateRoute exact path="/nationalities" component={NationalityList} />
 
         <PrivateRoute exact path="/people/:id" component={Person} />
 

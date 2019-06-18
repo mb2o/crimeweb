@@ -29,20 +29,29 @@ const Dashboard = ({ auth: { user } }) => {
             Moorden zoeken op nationaliteit slachtoffer
           </Link>
         </div>
+
         <div className="item">
           Moorden zoeken
           <div className="list">
             <div className="item">
-              <Link to="/nationalities">Op nationaliteit slachtoffer</Link>
+              <Link to="/homicides/nationalities">
+                Op nationaliteit slachtoffer
+              </Link>
             </div>
             <div className="item">
-              <Link to="/homicides">Op geografische locatie</Link>
+              <Link to="/homicides/geographical">Op geografische locatie</Link>
             </div>
             <div className="item">
-              <Link to="/homicides">Deze maand</Link>
+              <Link to="/homicides/current/month">Deze maand</Link>
             </div>
             <div className="item">
-              <Link to="/homicides">Dit jaar</Link>
+              <Link to="/homicides/current/year">Dit jaar</Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides/children">Op kinderen</Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides/prostitutes">Op prostituees</Link>
             </div>
           </div>
         </div>

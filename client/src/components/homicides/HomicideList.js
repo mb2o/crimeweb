@@ -2,25 +2,34 @@ import React, { useEffect } from 'react';
 
 import Spinner from '../layout/Spinner';
 import usePeople from '../hooks/usePeople';
+import moment from 'moment';
 
 export default function HomicideList(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   });
 
-  let sql = '/api/homicides';
+  let url = '/api/homicides';
 
   let countryId = props.match.params.countryId;
   if (countryId) {
-    sql += `?birthcountry_id=${countryId}`;
+    url += `?birthcountry_id=${countryId}`;
   }
 
   let city = props.match.params.city;
   if (city) {
-    sql += `?city=${city}`;
+    url += `?city=${city}`;
   }
 
-  const [data, isLoading] = usePeople(sql, { people: [] });
+  if (props.match.path === '/homicides/current/year') {
+    url += `/${moment().year()}`;
+  }
+
+  if (props.match.path === '/homicides/current/month') {
+    url += `/${moment().year()}/${moment().month() + 1}`;
+  }
+
+  const [data, isLoading] = usePeople(url, { people: [] });
 
   const showDetails = id => {
     props.history.push('/people/' + id);

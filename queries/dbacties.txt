@@ -1,2 +1,15 @@
 DELETE migrations
-DELETE 
+
+Nederlandse Antillen toevoegen (AN, ANT)
+Sint-Maarten verwijderen
+Saint-Martin verwijderen
+Curacao verwijderen
+Bonaire verwijderen
+
+update people
+set birthcountry_id = 254
+where birthcountry_id in (157, 189, 252, 253)
+
+update people
+set deathcountry_id = 254
+where deathcountry_id in (157, 189, 252, 253)

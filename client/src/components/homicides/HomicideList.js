@@ -10,9 +10,14 @@ export default function HomicideList(props) {
 
   let sql = '/api/homicides';
 
+  let countryId = props.match.params.countryId;
+  if (countryId) {
+    sql += `?birthcountry_id=${countryId}`;
+  }
+
   let city = props.match.params.city;
   if (city) {
-    sql = `/api/homicides?city=${city}`;
+    sql += `?city=${city}`;
   }
 
   const [data, isLoading] = usePeople(sql, { people: [] });

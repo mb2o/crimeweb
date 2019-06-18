@@ -12,6 +12,7 @@ import Person from '../people/Person';
 import PrivateRoute from './PrivateRoute';
 import Register from '../auth/Register';
 import TownshipList from '../homicides/TownshipList';
+import NationalityList from '../homicides/NationalityList';
 
 const Routes = () => {
   return (
@@ -25,10 +26,14 @@ const Routes = () => {
 
         <PrivateRoute
           exact
+          path="/homicides/country/:countryId"
+          component={HomicideList}
+        />
+        <PrivateRoute
+          exact
           path="/homicides/city/:city"
           component={HomicideList}
         />
-        <PrivateRoute exact path="/homicides" component={CountyList} />
         <PrivateRoute
           exact
           path="/homicides/:county"
@@ -39,6 +44,8 @@ const Routes = () => {
           path="/homicides/:county/:township"
           component={CityList}
         />
+        <PrivateRoute exact path="/homicides" component={CountyList} />
+        <PrivateRoute exact path="/nationalities" component={NationalityList} />
 
         <PrivateRoute exact path="/people/:id" component={Person} />
 

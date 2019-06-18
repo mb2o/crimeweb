@@ -25,21 +25,24 @@ const Dashboard = ({ auth: { user } }) => {
 
       <div className="ui celled ordered list">
         <div className="item">
-          <Link to="/homicides">Moorden deze maand</Link>
+          <Link to="/nationalities">
+            Moorden zoeken op nationaliteit slachtoffer
+          </Link>
         </div>
         <div className="item">
-          Moorden
+          Moorden zoeken
           <div className="list">
             <div className="item">
-              <Link to="/homicides">
-                Moorden zoeken op geografische locatie
-              </Link>
+              <Link to="/nationalities">Op nationaliteit slachtoffer</Link>
             </div>
             <div className="item">
-              <Link to="/homicides">Moorden deze maand</Link>
+              <Link to="/homicides">Op geografische locatie</Link>
             </div>
             <div className="item">
-              <Link to="/homicides">Moorden dit jaar</Link>
+              <Link to="/homicides">Deze maand</Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides">Dit jaar</Link>
             </div>
           </div>
         </div>

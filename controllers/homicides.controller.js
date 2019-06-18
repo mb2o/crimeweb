@@ -59,6 +59,14 @@ homicidesController.homicides = async (req, res) => {
     });
   }
 
+  if (req.query.birthcountry_id) {
+    whereFilter.push({
+      birthcountry_id: {
+        [Op.eq]: `${req.query.birthcountry_id}`
+      }
+    });
+  }
+
   let filter = {
     where: {
       [Op.and]: whereFilter
@@ -276,6 +284,23 @@ homicidesController.homicidesBetween = async (req, res) => {
   let result = await db.Person.findAll(filter);
 
   return res.status(200).json(result);
+};
+
+homicidesController.homicidesPerNationality = async (req, res) => {
+  let sql =
+    'select c.id, c.name as country, c.iso_alpha_2 as abbr, count(*) as homicides from people p join countries c on lower(c.id) = lower(p.birthcountry_id) where p.deathcountry_id = 156 and p.mannerofdeath_id = 38 group by c.name order by c.name';
+
+  if (req.query.country) {
+    sql = `select c.id, c.name as country, c.iso_alpha_2 as abbr, count(*) as homicides from people p join countries c on lower(c.id) = lower(p.birthcountry_id) where p.deathcountry_id = 156 and p.mannerofdeath_id = 38 and c.name = '${
+      req.query.country
+    }' group by c.name order by c.name`;
+  }
+
+  db.sequelize
+    .query(sql, { type: db.sequelize.QueryTypes.SELECT })
+    .then(stats => {
+      return res.status(200).json(stats);
+    });
 };
 
 homicidesController.homicidesPerCity = async (req, res) => {

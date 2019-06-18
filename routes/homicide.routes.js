@@ -5,6 +5,11 @@ const homicideController = require('../controllers/homicides.controller');
 
 homicideRouter.get('/', homicideController.homicides);
 
+homicideRouter.get(
+  '/homicidesPerNationality',
+  homicideController.homicidesPerNationality
+);
+
 homicideRouter.get('/homicidesPerCity', homicideController.homicidesPerCity);
 
 homicideRouter.get(

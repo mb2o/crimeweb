@@ -8,7 +8,8 @@ import Dashboard from '../dashboard/Dashboard';
 import HomicideList from '../homicides/HomicideList';
 import Login from '../auth/Login';
 import NotFound from '../layout/NotFound';
-import Person from '../people/PersonDetails';
+import PersonDetails from '../people/PersonDetails';
+import PeopleList from '../people/PeopleList';
 import PrivateRoute from './PrivateRoute';
 import Register from '../auth/Register';
 import TownshipList from '../homicides/TownshipList';
@@ -72,8 +73,8 @@ const Routes = () => {
           component={CityList}
         />
 
-        <PrivateRoute exact path="/people/:id" component={Person} />
-        <PrivateRoute exact path="/people/tags/:tag" component={Person} />
+        <PrivateRoute exact path="/people/:id" component={PersonDetails} />
+        <PrivateRoute exact path="/people/tags/:tag" component={PeopleList} />
 
         <Route component={NotFound} />
       </Switch>

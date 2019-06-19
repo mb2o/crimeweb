@@ -4,7 +4,7 @@ import axios from 'axios';
 import Spinner from '../layout/Spinner';
 import moment from 'moment';
 
-export default function Person(props) {
+export default function PersonDetails(props) {
   const [data, setData] = useState({ person: {} });
   const [isLoading, setIsLoading] = useState(false);
 

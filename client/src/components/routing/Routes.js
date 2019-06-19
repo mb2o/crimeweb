@@ -8,7 +8,7 @@ import Dashboard from '../dashboard/Dashboard';
 import HomicideList from '../homicides/HomicideList';
 import Login from '../auth/Login';
 import NotFound from '../layout/NotFound';
-import Person from '../people/Person';
+import Person from '../people/PersonDetails';
 import PrivateRoute from './PrivateRoute';
 import Register from '../auth/Register';
 import TownshipList from '../homicides/TownshipList';

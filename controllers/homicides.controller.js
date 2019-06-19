@@ -288,10 +288,10 @@ homicidesController.homicidesBetween = async (req, res) => {
 
 homicidesController.homicidesPerNationality = async (req, res) => {
   let sql =
-    'select c.id, c.name as country, c.iso_alpha_2 as abbr, count(*) as homicides from people p join countries c on lower(c.id) = lower(p.birthcountry_id) where p.mannerofdeath_id = 38 group by c.name order by c.name';
+    'select c.id, c.name as country, c.iso_alpha_2 as abbr, count(*) as homicides from people p join countries c on c.id = p.birthcountry_id where p.mannerofdeath_id = 38 group by c.name order by c.name';
 
   if (req.query.country) {
-    sql = `select c.id, c.name as country, c.iso_alpha_2 as abbr, count(*) as homicides from people p join countries c on lower(c.id) = lower(p.birthcountry_id) where p.mannerofdeath_id = 38 and c.name = '${
+    sql = `select c.id, c.name as country, c.iso_alpha_2 as abbr, count(*) as homicides from people p join countries c on c.id = p.birthcountry_id where p.mannerofdeath_id = 38 and c.name = '${
       req.query.country
     }' group by c.name order by c.name`;
   }
@@ -307,10 +307,10 @@ homicidesController.homicidesPerNationality = async (req, res) => {
 
 homicidesController.homicidesPerCity = async (req, res) => {
   let sql =
-    'select cityname as city, count(*) as homicides from people p join cities c on lower(c.cityname) = lower(p.deathcity) where p.deathcountry_id = 156 and p.mannerofdeath_id = 38 group by cityname order by cityname';
+    'select cityname as city, count(*) as homicides from people p join cities c on c.cityname = p.deathcity where p.deathcountry_id = 156 and p.mannerofdeath_id = 38 group by cityname order by cityname';
 
   if (req.query.township) {
-    sql = `select cityname as city, count(*) as homicides from people p join cities c on lower(c.cityname) = lower(p.deathcity) where p.deathcountry_id = 156 and p.mannerofdeath_id = 38 and c.township = '${
+    sql = `select cityname as city, count(*) as homicides from people p join cities c on c.cityname = p.deathcity where p.deathcountry_id = 156 and p.mannerofdeath_id = 38 and c.township = '${
       req.query.township
     }' group by cityname order by cityname`;
   }
@@ -324,10 +324,10 @@ homicidesController.homicidesPerCity = async (req, res) => {
 
 homicidesController.homicidesPerTownship = async (req, res) => {
   let sql =
-    'select township, count(*) as homicides from people p join cities c on lower(c.cityname) = lower(p.deathcity) where p.deathcountry_id = 156 and mannerofdeath_id = 38 group by township order by township';
+    'select township, count(*) as homicides from people p join cities c on c.cityname = p.deathcity where p.deathcountry_id = 156 and mannerofdeath_id = 38 group by township order by township';
 
   if (req.query.county) {
-    sql = `select township, count(*) as homicides from people p join cities c on lower(c.cityname) = lower(p.deathcity) where p.deathcountry_id = 156 and mannerofdeath_id = 38 and c.county = '${
+    sql = `select township, count(*) as homicides from people p join cities c on c.cityname = p.deathcity where p.deathcountry_id = 156 and mannerofdeath_id = 38 and c.county = '${
       req.query.county
     }' group by township order by township`;
   }
@@ -342,7 +342,7 @@ homicidesController.homicidesPerTownship = async (req, res) => {
 homicidesController.homicidesPerCounty = async (req, res) => {
   db.sequelize
     .query(
-      'select county, count(*) as homicides from people p join cities c on lower(c.cityname) = lower(p.deathcity) where p.deathcountry_id = 156 and mannerofdeath_id = 38 group by county order by county',
+      'select county, count(*) as homicides from people p join cities c on c.cityname = p.deathcity where p.deathcountry_id = 156 and mannerofdeath_id = 38 group by county order by county',
       { type: db.sequelize.QueryTypes.SELECT }
     )
     .then(stats => {
@@ -353,7 +353,7 @@ homicidesController.homicidesPerCounty = async (req, res) => {
 homicidesController.homicidesPerCountryPart = async (req, res) => {
   db.sequelize
     .query(
-      'select countrypart, count(*) as homicides from people p join cities c on lower(c.cityname) = lower(p.deathcity) where p.deathcountry_id = 156 and mannerofdeath_id = 38 group by countrypart order by countrypart',
+      'select countrypart, count(*) as homicides from people p join cities c on c.cityname = p.deathcity where p.deathcountry_id = 156 and mannerofdeath_id = 38 group by countrypart order by countrypart',
       { type: db.sequelize.QueryTypes.SELECT }
     )
     .then(stats => {

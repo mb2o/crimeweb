@@ -47,12 +47,6 @@ const Dashboard = ({ auth: { user } }) => {
             <div className="item">
               <Link to="/homicides/current/year">Dit jaar</Link>
             </div>
-            <div className="item">
-              <Link to="/homicides/children">Op kinderen</Link>
-            </div>
-            <div className="item">
-              <Link to="/homicides/prostitutes">Op prostituees</Link>
-            </div>
           </div>
         </div>
       </div>

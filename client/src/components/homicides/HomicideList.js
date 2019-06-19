@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
 import Spinner from '../layout/Spinner';
-import usePeople from '../hooks/usePeople';
 import moment from 'moment';
+import usePeople from '../hooks/usePeople';
 
 export default function HomicideList(props) {
   useEffect(() => {

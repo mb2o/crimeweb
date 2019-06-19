@@ -73,6 +73,7 @@ const Routes = () => {
         />
 
         <PrivateRoute exact path="/people/:id" component={Person} />
+        <PrivateRoute exact path="/people/tags/:tag" component={Person} />
 
         <Route component={NotFound} />
       </Switch>

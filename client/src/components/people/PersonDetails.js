@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import Spinner from '../layout/Spinner';
@@ -58,6 +59,15 @@ export default function PersonDetails(props) {
               </div>
             </div>
           </div>
+
+          {data.person.tags &&
+            data.person.tags.map(tag => (
+              <Link
+                to={`/people/tags/${tag.title}`}
+                className="ui teal tag label">
+                {tag.title}
+              </Link>
+            ))}
         </>
       )}
     </div>

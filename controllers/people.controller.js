@@ -367,6 +367,102 @@ peopleController.getConvictions = async (req, res) => {
   return res.status(200).json(convictions);
 };
 
+peopleController.getByTag = async (req, res) => {
+  let result = await db.Person.findAll({
+    include: [
+      {
+        model: db.User,
+        as: 'user',
+        attributes: ['id', 'name']
+      },
+      {
+        model: db.Country,
+        as: 'birthcountry',
+        attributes: countryAttributes
+      },
+      {
+        model: db.Country,
+        as: 'deathcountry',
+        attributes: countryAttributes
+      },
+      {
+        model: db.Crime,
+        as: 'crimes',
+        attributes: crimeAttributes,
+        include: [
+          {
+            model: db.Person,
+            as: 'victim',
+            attributes: personAttributes
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['id', 'title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['id', 'title']
+          }
+        ]
+      },
+      {
+        model: db.Crime,
+        as: 'victim_of',
+        attributes: crimeAttributes,
+        include: [
+          {
+            model: db.Person,
+            as: 'perpetrator',
+            attributes: personAttributes
+          },
+          {
+            model: db.CrimeType,
+            as: 'crime_type',
+            attributes: ['id', 'title']
+          },
+          {
+            model: db.Motive,
+            as: 'motive',
+            attributes: ['id', 'title']
+          }
+        ]
+      },
+      {
+        model: db.CauseOfDeath,
+        as: 'cause_of_death',
+        attributes: ['id', 'title']
+      },
+      {
+        model: db.Classification,
+        as: 'classification',
+        attributes: ['id', 'title']
+      },
+      {
+        model: db.MannerOfDeath,
+        as: 'manner_of_death',
+        attributes: ['id', 'title']
+      },
+      {
+        model: db.Tag,
+        as: 'tags',
+        where: {
+          title: req.params.tag
+        },
+        attributes: ['id', 'title'],
+        through: {
+          attributes: []
+        }
+      }
+    ],
+    order: [['deathdate', 'DESC']],
+    limit: 15
+  });
+
+  return res.status(200).json(result);
+};
+
 peopleController.update = async (req, res) => {
   await db.Person.update(
     { ...req.body },

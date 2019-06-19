@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import AgeCounter from '../statistics/AgeCounter';
 import HomicideCounter from '../statistics/HomicideCounter';
 import NationalityCounter from '../statistics/NationalityCounter';
-import PeopleList from '../people/PeopleList';
 
 const Dashboard = ({ auth: { user } }) => {
   return (
@@ -23,9 +23,33 @@ const Dashboard = ({ auth: { user } }) => {
         <AgeCounter />
       </div>
 
-      <div className="ui divider" />
+      <div className="ui celled ordered list">
+        <div className="item">
+          <Link to="/nationalities">
+            Moorden zoeken op nationaliteit slachtoffer
+          </Link>
+        </div>
 
-      <PeopleList />
+        <div className="item">
+          Moorden zoeken
+          <div className="list">
+            <div className="item">
+              <Link to="/homicides/nationalities">
+                Op nationaliteit slachtoffer
+              </Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides/geographical">Op geografische locatie</Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides/current/month">Deze maand</Link>
+            </div>
+            <div className="item">
+              <Link to="/homicides/current/year">Dit jaar</Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };

@@ -1,2 +1,48 @@
 DELETE migrations
-DELETE 
+
+Nederlandse Antillen toevoegen (AN, ANT)
+Sint-Maarten verwijderen
+Saint-Martin verwijderen
+Curacao verwijderen
+Bonaire verwijderen
+
+update people
+set birthcountry_id = 254
+where birthcountry_id in (157, 189, 252, 253)
+
+update people
+set deathcountry_id = 254
+where deathcountry_id in (157, 189, 252, 253)
+
+Create index id ON people (Id);
+Create index birthcountry_id ON people (birthcountry_Id);
+Create index deathcountry_id ON people (deathcountry_Id);
+Create index mannerofdeath_id ON people (mannerofdeath_Id);
+Create index classification_id ON people (classification_Id);
+Create index causeofdeath_id ON people (causeofdeath_Id);
+Create index is_deceased ON people (is_Deceased);
+Create index deathcity ON people (deathCity);
+Create index deathdate ON people (deathDate);
+Create index lastname ON people (lastName);
+Create index firstname ON people (firstName);
+Create index user_id ON people (user_Id);
+
+Create index id ON cities (Id);
+Create index county ON cities (County);
+Create index cityname ON cities (cityName);
+Create index township ON cities (townShip);
+Create index countrypart ON cities (countryPart);
+
+Create index id ON countries (Id);
+Create index name ON countries (Name);
+
+Create index id ON crimes (Id);
+Create index criminal_id ON crimes (criminal_Id);
+Create index victim_id ON crimes (victim_Id);
+Create index type_id ON crimes (type_Id);
+Create index motive_id ON crimes (motive_Id);
+
+Create index id ON people_tags (Id);
+Create index tag_id ON people_tags (tag_Id);
+Create index person_id ON people_tags (person_Id);
+

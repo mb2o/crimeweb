@@ -11,4 +11,35 @@ STATISTIEK
 - 
 - 
 
+Periode:
+  17e eeuw (10)
+  18e eeuw (129)
+  19e eeuw (1789)
+  20e eeuw (6764)
+  21e eeuw (1676)
+
+Verspreidingsgebied:
+  Landelijk (8029)
+  Nederlandse Antillen (765)
+  Internationaal (1145)
+
+Soort misdrijf:
+  moord (2398)
+  doodslag (7897)
+  gekwalificeerde doodslag (1211)
+  ontvoering (90)
+
+Doodsoorzaak:
+  verwurging
+  strangulatie
+  vuurwapen
+  steekwapen
+  geweld
+
+Tags:
+  Prositituee (234)
+  Bende van Nijvel (86)
+
+
+
 

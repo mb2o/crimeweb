@@ -456,7 +456,7 @@ peopleController.getByTag = async (req, res) => {
         }
       }
     ],
-    order: [['deathdate', 'DESC']],
+    order: [['lastname', 'ASC'], ['firstname', 'ASC']],
     limit: 15
   });
 

@@ -4,14 +4,13 @@ import Spinner from '../layout/Spinner';
 import usePeople from '../hooks/usePeople';
 
 export default function PeopleList(props) {
-  let city = props.match.params.city;
-  let sql = '/api/people';
-
-  if (city) {
-    sql = `/api/people/search?deathcity=${city}&mannerofdeath_id=38`;
-  }
+  let sql = '/api/people/tags/' + props.match.params.tag;
 
   const [data, isLoading] = usePeople(sql, { people: [] });
+
+  const showDetails = id => {
+    props.history.push('/people/' + id);
+  };
 
   return (
     <div>
@@ -31,7 +30,7 @@ export default function PeopleList(props) {
           </thead>
           <tbody>
             {data.people.map(person => (
-              <tr key={person.id}>
+              <tr key={person.id} onClick={() => showDetails(person.id)}>
                 <td>
                   <img className="ui avatar image" src={person.photo} alt="" />
                 </td>
@@ -48,8 +47,10 @@ export default function PeopleList(props) {
                   {person.firstname} {person.lastname.toUpperCase()}
                 </td>
                 <td>{person.age}</td>
-                <td>{person.manner_of_death.title}</td>
-                <td>{person.cause_of_death.title}</td>
+                <td>
+                  {person.manner_of_death && person.manner_of_death.title}
+                </td>
+                <td>{person.cause_of_death && person.cause_of_death.title}</td>
               </tr>
             ))}
           </tbody>
